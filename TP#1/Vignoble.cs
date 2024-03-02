@@ -8,8 +8,8 @@ namespace TP_1
 {
     internal class Vignoble
     {
-        private Proprietaire Propriétaire { get; set; }
-        private Terrain Terrain { get; set; }
+        public Proprietaire Propriétaire { get; set; }
+        public Terrain Terrain { get; set; }
 
         public List<Vin> Vins { get; set; } = new List<Vin>();
 

@@ -8,8 +8,8 @@ namespace TP_1
 {
     internal class Terrain
     {
-        private float Longueur { get; set; }
-        private float Largeur { get; set; }
+        public float Longueur { get; set; }
+        public float Largeur { get; set; }
 
         public Terrain(float longueur, float largeur)
         {

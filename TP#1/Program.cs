@@ -58,11 +58,40 @@ namespace TP_1
                 int qualitePredite = arbre.Predire(vinAAnalyser);
                 vinAAnalyser.Qualite = qualitePredite;
 
+                // Création de oenologue
+                Oenologue oenologue = new Oenologue("Byckel", "Koffi", 27);
+                // Supposons que vin que nous voulons analyser est le vin dont la qualité vient d'être prédite
+                oenologue.AssocierVin(vinAAnalyser);
+                // L'œnologue évalue notre vin
+                oenologue.EvaluerQualitéVin();
+
+                Console.WriteLine("Veuillez saisir les informations du propriétaire du vignoble :");
+                Console.Write("Nom : ");
+                string nomProprietaire = Console.ReadLine();
+                Console.Write("Prenom : ");
+                string prenomProprietaire = Console.ReadLine();
+                Console.Write("Age : ");
+                int ageProprietaire = int.Parse(Console.ReadLine());
+
+                Proprietaire proprietaire = new Proprietaire(nomProprietaire, prenomProprietaire, ageProprietaire);
+
+                Console.WriteLine("Veuillez saisir les dimensions du terrain :");
+                Console.Write("Longueur (m) : ");
+                float longueurTerrain = float.Parse(Console.ReadLine());
+                Console.Write("Largeur (m) : ");
+                float largeurTerrain = float.Parse(Console.ReadLine());
+
+                Terrain terrain = new Terrain(longueurTerrain, largeurTerrain);
+
+                Vignoble vignoble = new Vignoble(proprietaire, terrain);
+
+
                 // Afficher la prédiction de qualité du vin
                 Console.WriteLine("La qualité du vin prédite est : " + qualitePredite);
 
                 // Afficher la qualité prédite en utilisant la méthode Afficher de la classe Qualité
                 Qualite.Afficher(qualitePredite);
+                //vignoble.Afficher();
 
                 Console.WriteLine("Voulez-vous évaluer un autre vin ? (O/N)");
                 string reponse = Console.ReadLine().ToUpper();
@@ -72,7 +101,7 @@ namespace TP_1
                     string choix = Console.ReadLine().ToUpper();
                     if (choix == "O")
                     {
-                        SauvegarderDonneesVin(vinAAnalyser, @"C:\Users\Joel Kayemba\OneDrive\Documents\Données - Qualité du Vin(3)\Données_sauvergardées.txt");
+                        SauvegarderDonneesVin(vinAAnalyser,vignoble, @"C:\Users\Joel Kayemba\OneDrive\Documents\Données - Qualité du Vin(3)\Données_sauvergardées.txt");
                         Console.WriteLine("Informations sauvegardées avec succès.");
                     }
 
@@ -87,13 +116,13 @@ namespace TP_1
             Console.ReadKey();
 
         }
-        public static void SauvegarderDonneesVin(Vin vin, string cheminFichier)
+        public static void SauvegarderDonneesVin(Vin vin, Vignoble vignoble, string cheminFichier)
         {
             bool fichierExiste = File.Exists(cheminFichier);
             using (StreamWriter writer = new StreamWriter(cheminFichier,true))
             {
           
-                string ligne = $"Alcool: {vin.Alcool},\nSulfate: {vin.Sulfate},\nAcide Citrique:{vin.Acide_citrique},\nAcidité volatile: {vin.Acidite_volatile},\nQualité: {vin.Qualite}";
+                string ligne = $"Nom du Propriétaire: {vignoble.Propriétaire.Nom},\nPrenom du Propriétaire: {vignoble.Propriétaire.Prenom},\nAge du Propriétaire: {vignoble.Propriétaire.Age},\nLongueur du terrain: {vignoble.Terrain.Longueur},\nLargeur du terrain: {vignoble.Terrain.Largeur},\nAlcool: {vin.Alcool},\nSulfate: {vin.Sulfate},\nAcide Citrique:{vin.Acide_citrique},\nAcidité volatile: {vin.Acidite_volatile},\nQualité: {vin.Qualite}";
                 writer.WriteLine(ligne);
             }
         }

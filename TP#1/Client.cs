@@ -9,9 +9,9 @@ namespace TP_1
    
         internal abstract class Client
         {
-            protected string Nom { get; set; }
-            protected string Prenom { get; set; }
-            protected int Age { get; set; }
+            public string Nom { get; set; }
+            public string Prenom { get; set; }
+            public int Age { get; set; }
 
             public abstract void Afficher();
 

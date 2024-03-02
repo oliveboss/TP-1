@@ -13,6 +13,7 @@ namespace TP_1
         private float acide_citrique;
         private float acidite_volatile;
         private int qualite;
+       
         public float Alcool
         {
             get { return alcool; }
