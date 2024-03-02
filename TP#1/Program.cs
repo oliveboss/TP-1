@@ -62,8 +62,7 @@ namespace TP_1
                 Oenologue oenologue = new Oenologue("Byckel", "Koffi", 27);
                 // Supposons que vin que nous voulons analyser est le vin dont la qualité vient d'être prédite
                 oenologue.AssocierVin(vinAAnalyser);
-                // L'œnologue évalue notre vin
-                oenologue.EvaluerQualitéVin();
+                
 
                 Console.WriteLine("Veuillez saisir les informations du propriétaire du vignoble :");
                 Console.Write("Nom : ");
@@ -91,6 +90,8 @@ namespace TP_1
 
                 // Afficher la qualité prédite en utilisant la méthode Afficher de la classe Qualité
                 Qualite.Afficher(qualitePredite);
+                // L'œnologue évalue notre vin
+                oenologue.EvaluerQualitéVin();
                 //vignoble.Afficher();
 
                 Console.WriteLine("Voulez-vous évaluer un autre vin ? (O/N)");
