@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,9 +11,9 @@ namespace TP_1
     {
         static void Main(string[] args)
         {
-            string cheminFichierApprentissage = @"C:\Users\amouz\OneDrive\Bureau\Donnes_D_Apprentissage.csv";
-            string cheminFichierTest = @"C:\Users\amouz\OneDrive\Bureau\test_reduced.csv";
-            string cheminFichierEchantillon = @"C:\Users\amouz\OneDrive\Bureau\samples_reduced";
+            string cheminFichierApprentissage = @"C:\Users\Joel Kayemba\OneDrive\Documents\Données - Qualité du Vin(3)\train_reduced.csv";//"C:\Users\amouz\OneDrive\Bureau\Donnes_D_Apprentissage.csv";
+            string cheminFichierTest = @"C:\Users\Joel Kayemba\OneDrive\Documents\Données - Qualité du Vin(3)\test_reduced.csv";//"C:\Users\amouz\OneDrive\Bureau\test_reduced.csv";
+            string cheminFichierEchantillon = @"C:\Users\Joel Kayemba\OneDrive\Documents\Données - Qualité du Vin(3)\samples_reduced";//"C:\Users\amouz\OneDrive\Bureau\samples_reduced";
 
             // Charger les données d'apprentissage, de test et d'échantillon
             List<Vin> donneesApprentissage = DataLoader.ChargerDonneesApprentissage(cheminFichierApprentissage);
@@ -66,13 +67,35 @@ namespace TP_1
                 string reponse = Console.ReadLine().ToUpper();
                 if (reponse != "O")
                 {
+                    Console.WriteLine("Voulez-vous sauvegarder les informations de ce vin ? (O/N)");
+                    string choix = Console.ReadLine().ToUpper();
+                    if (choix == "O")
+                    {
+                        SauvegarderDonneesVin(vinAAnalyser, @"C:\Users\Joel Kayemba\OneDrive\Documents\Données - Qualité du Vin(3)\Données_sauvergardées.txt");
+                        Console.WriteLine("Informations sauvegardées avec succès.");
+                    }
+
                     break;
                 }
+               
+
+               
+                
             }
 
             Console.ReadKey();
 
         }
+        public static void SauvegarderDonneesVin(Vin vin, string cheminFichier)
+        {
+            
+            using (StreamWriter writer = new StreamWriter(cheminFichier,true))
+            {
+                string ligne = $"{vin.Alcool},{vin.Sulfate},{vin.Acide_citrique},{vin.Acidite_volatile},{vin.Qualite}";
+                writer.WriteLine(ligne);
+            }
         }
+
     }
+}
 
