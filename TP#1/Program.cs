@@ -88,10 +88,11 @@ namespace TP_1
         }
         public static void SauvegarderDonneesVin(Vin vin, string cheminFichier)
         {
-            
+            bool fichierExiste = File.Exists(cheminFichier);
             using (StreamWriter writer = new StreamWriter(cheminFichier,true))
             {
-                string ligne = $"{vin.Alcool},{vin.Sulfate},{vin.Acide_citrique},{vin.Acidite_volatile},{vin.Qualite}";
+          
+                string ligne = $"Alcool: {vin.Alcool},\nSulfate: {vin.Sulfate},\nAcide Citrique:{vin.Acide_citrique},\nAcidité volatile: {vin.Acidite_volatile},\nQualité: {vin.Qualite}";
                 writer.WriteLine(ligne);
             }
         }
