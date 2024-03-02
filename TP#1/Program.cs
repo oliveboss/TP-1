@@ -56,6 +56,7 @@ namespace TP_1
 
                 // Utiliser le modèle pour prédire la qualité du vin
                 int qualitePredite = arbre.Predire(vinAAnalyser);
+                vinAAnalyser.Qualite = qualitePredite;
 
                 // Afficher la prédiction de qualité du vin
                 Console.WriteLine("La qualité du vin prédite est : " + qualitePredite);
