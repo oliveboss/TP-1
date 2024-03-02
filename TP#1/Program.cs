@@ -123,7 +123,7 @@ namespace TP_1
             using (StreamWriter writer = new StreamWriter(cheminFichier,true))
             {
           
-                string ligne = $"Nom du Propriétaire: {vignoble.Propriétaire.Nom},\nPrenom du Propriétaire: {vignoble.Propriétaire.Prenom},\nAge du Propriétaire: {vignoble.Propriétaire.Age},\nLongueur du terrain: {vignoble.Terrain.Longueur},\nLargeur du terrain: {vignoble.Terrain.Largeur},\nAlcool: {vin.Alcool},\nSulfate: {vin.Sulfate},\nAcide Citrique:{vin.Acide_citrique},\nAcidité volatile: {vin.Acidite_volatile},\nQualité: {vin.Qualite}";
+                string ligne = $"\nNOUVEAU VIN:\nNom du Propriétaire: {vignoble.Propriétaire.Nom},\nPrenom du Propriétaire: {vignoble.Propriétaire.Prenom},\nAge du Propriétaire: {vignoble.Propriétaire.Age} ans,\nLongueur du terrain: {vignoble.Terrain.Longueur}m,\nLargeur du terrain: {vignoble.Terrain.Largeur}m,\nAlcool: {vin.Alcool},\nSulfate: {vin.Sulfate},\nAcide Citrique:{vin.Acide_citrique},\nAcidité volatile: {vin.Acidite_volatile},\nQualité: {vin.Qualite}";
                 writer.WriteLine(ligne);
             }
         }
