@@ -40,11 +40,11 @@ namespace TP_1
                 
                 if (Vin.Alcool > 12)
                 {
-                    Console.WriteLine("Ce vin nécessite une consommation avec modération");
+                    Console.WriteLine("Ce vin nécessite une consommation avec modération et est fortement déconseillé pour une consommation au dessus de deux verres");
                 }
                 else
                 {
-                    Console.WriteLine("ce vin est fait pour boire comme tu veux");
+                    Console.WriteLine("Ce vin a un taux d'alcool plutôt bas, mais cela nécessite une consommation modérée");
                 }
             }
         }
