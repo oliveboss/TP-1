@@ -6,31 +6,31 @@ using System.Threading.Tasks;
 
 namespace TP_1
 {
+
+
     internal class Vignoble
     {
         public Proprietaire Propriétaire { get; set; }
-        public Terrain Terrain { get; set; }
+        public List<Terrain> Terrains { get; set; } = new List<Terrain>(); // Utilisation d'une liste de terrains
 
         public List<Vin> Vins { get; set; } = new List<Vin>();
 
-        public Vignoble(Proprietaire propriétaire, Terrain terrain)
+        public Vignoble(Proprietaire propriétaire)
         {
             Propriétaire = propriétaire;
-            Terrain = terrain;
         }
 
+        public void AjouterTerrain(Terrain terrain)
+        {
+            Terrains.Add(terrain);
+        }
+        public void SupprimerTerrain(Terrain terrain)
+        {
+            Terrains.Remove(terrain);
+        }
         public void Afficher()
         {
-            if (Terrain != null)
-            {
-                Terrain.Afficher();
-
-            }
-            else
-            {
-                Console.WriteLine("Aucun terrain n'est associé à ce vignoble");
-            }
-
+            Console.WriteLine("Informations sur le vignoble :");
 
             if (Propriétaire != null)
             {
@@ -40,6 +40,20 @@ namespace TP_1
             {
                 Console.WriteLine("Aucun propriétaire n'est associé à ce vignoble");
             }
+            if (Terrains.Count > 0)
+            {
+                Console.WriteLine("Terrains associés :");
+                foreach (var terrain in Terrains)
+                {
+                    terrain.Afficher();
+                }
+            }
+            else
+            {
+                Console.WriteLine("Aucun terrain n'est associé à ce vignoble");
+            }
+
+           
         }
     }
 }

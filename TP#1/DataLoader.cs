@@ -119,5 +119,79 @@ namespace TP_1
 
             return donneesEchantillons;
         }
+        public static void SauvegarderDonneesVin(Vin vin, string cheminFichier)
+        {
+            int i = 1;
+            try
+            {
+                using (StreamWriter writer = new StreamWriter(cheminFichier, true))
+                {
+                    // Écrire les informations du vin dans le fichier
+                    writer.WriteLine("Vin Num " + i + ": ");
+                    writer.WriteLine($"Alcool: {vin.Alcool}, Sulfate: {vin.Sulfate}, Acide citrique: {vin.Acide_citrique}, Acidité volatile: {vin.Acidite_volatile}, Qualité: {vin.Qualite}");
+                    i++;
+                }
+            }
+            catch (Exception ex)
+            {
+
+
+                Console.WriteLine("Erreur lors de la sauvegarde des données du vin : " + ex.Message);
+            }
+
+
+
+
+        }
+
+        public static void SauvegarderTerrain(Terrain terrain)
+        {
+            int i = 1;
+            try
+            {
+                string cheminFichier = @"C:\Users\amouz\OneDrive\Bureau\TP#1\Donnees_sauvegarde\Donnees_Terrain.txt"; 
+                using (StreamWriter writer = new StreamWriter(cheminFichier, true))
+                {
+                    writer.WriteLine($"Terrain {i}: Longueur = {terrain.Longueur} m, Largeur = {terrain.Largeur} m");
+                }
+                Console.WriteLine("Terrain sauvegardé avec succès dans le fichier .txt.");
+                i++;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Erreur lors de la sauvegarde du terrain dans le fichier .txt : " + ex.Message);
+            }
+        }
+
+        public static void SupprimerTerrain(List<Terrain> terrains, int indice)
+        {
+            try
+            {
+                if (indice >= 1 && indice <= terrains.Count)
+                {
+                    string cheminFichier = @"C:\Users\amouz\OneDrive\Bureau\TP#1\Donnees_sauvegarde\Donnees_Terrain.txt";
+                  
+                    // Réécrire tous les terrains dans le fichier
+                    using (StreamWriter writer = new StreamWriter(cheminFichier))
+                    {
+                        for (int i = 0; i < terrains.Count; i++)
+                        {
+                            writer.WriteLine($"Terrain {i + 1}: Longueur = {terrains[i].Longueur} m, Largeur = {terrains[i].Largeur} m");
+                        }
+                    }
+
+                    Console.WriteLine($"Le terrain {indice} a été supprimé avec succès du fichier .txt.");
+                }
+                else
+                {
+                    Console.WriteLine("Indice de terrain non valide.");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Erreur lors de la suppression du terrain dans le fichier .txt : " + ex.Message);
+            }
+        }
     }
-}
+    }
+
