@@ -35,16 +35,20 @@ namespace TP_1
             }
             else
             {
-                
+
                 Console.WriteLine($"Évaluation du vin par l'œnologue {Nom} {Prenom}:");
-                
+
                 if (Vin.Alcool > 12)
                 {
                     Console.WriteLine("Ce vin nécessite une consommation avec modération et est fortement déconseillé pour une consommation au dessus de deux verres");
                 }
+                else if (Vin.Alcool <= 3)
+                {
+                    Console.WriteLine("Avec un taux d'alcool relativement faible, ce vin promet une légèreté rafraîchissante, idéale pour les dégustations en journée.");
+                }
                 else
                 {
-                    Console.WriteLine("Ce vin a un taux d'alcool plutôt bas, mais cela nécessite une consommation modérée");
+                    Console.WriteLine("Un équilibre parfait d'alcool qui souligne sa structure et sa complexité, ce vin est un compagnon idéal pour les mets raffinés.");
                 }
             }
         }
