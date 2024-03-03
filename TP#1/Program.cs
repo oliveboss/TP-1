@@ -13,9 +13,9 @@ namespace TP_1
         {
             Console.WriteLine("Plongez au cœur de l'art vinicole et découvrez le potentiel caché de chaque bouteille avec notre application experte en évaluation de vins. Ensemble, explorons les secrets des grands crus et donnons vie à votre expérience œnologique. Bienvenue dans votre voyage personnalisé vers l'excellence vinicole !");
             Console.WriteLine("----------------------------------------------------------------------------------------------------");
-            string cheminFichierApprentissage = @"C:\Users\Joel Kayemba\OneDrive\Documents\Données - Qualité du Vin(3)\train_reduced.csv";//"C:\Users\amouz\OneDrive\Bureau\Donnes_D_Apprentissage.csv";
-            string cheminFichierTest = @"C:\Users\Joel Kayemba\OneDrive\Documents\Données - Qualité du Vin(3)\test_reduced.csv";//"C:\Users\amouz\OneDrive\Bureau\test_reduced.csv";
-            string cheminFichierEchantillon = @"C:\Users\Joel Kayemba\OneDrive\Documents\Données - Qualité du Vin(3)\samples_reduced";//"C:\Users\amouz\OneDrive\Bureau\samples_reduced";
+            string cheminFichierApprentissage = @"C:\Users\amouz\OneDrive\Bureau\Donnes_D_Apprentissage.csv";
+            string cheminFichierTest = @"C:\Users\amouz\OneDrive\Bureau\test_reduced.csv";
+            string cheminFichierEchantillon = @"C:\Users\amouz\OneDrive\Bureau\samples_reduced";
 
             /*   string cheminFichierApprentissage = @"C:\Users\Joel Kayemba\OneDrive\Documents\Données - Qualité du Vin(3)\train_reduced.csv";//"C:\Users\amouz\OneDrive\Bureau\Donnes_D_Apprentissage.csv";
                string cheminFichierTest = @"C:\Users\Joel Kayemba\OneDrive\Documents\Données - Qualité du Vin(3)\test_reduced.csv";//"C:\Users\amouz\OneDrive\Bureau\test_reduced.csv";
