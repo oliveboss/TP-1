@@ -11,9 +11,11 @@ namespace TP_1
     {
         static void Main(string[] args)
         {
-            string cheminFichierApprentissage = @"C:\Users\amouz\OneDrive\Bureau\Donnes_D_Apprentissage.csv";
-            string cheminFichierTest = @"C:\Users\amouz\OneDrive\Bureau\test_reduced.csv";
-            string cheminFichierEchantillon = @"C:\Users\amouz\OneDrive\Bureau\samples_reduced";
+            Console.WriteLine("Plongez au cœur de l'art vinicole et découvrez le potentiel caché de chaque bouteille avec notre application experte en évaluation de vins. Ensemble, explorons les secrets des grands crus et donnons vie à votre expérience œnologique. Bienvenue dans votre voyage personnalisé vers l'excellence vinicole !");
+            Console.WriteLine("----------------------------------------------------------------------------------------------------");
+            string cheminFichierApprentissage = @"C:\Users\Joel Kayemba\OneDrive\Documents\Données - Qualité du Vin(3)\train_reduced.csv";//"C:\Users\amouz\OneDrive\Bureau\Donnes_D_Apprentissage.csv";
+            string cheminFichierTest = @"C:\Users\Joel Kayemba\OneDrive\Documents\Données - Qualité du Vin(3)\test_reduced.csv";//"C:\Users\amouz\OneDrive\Bureau\test_reduced.csv";
+            string cheminFichierEchantillon = @"C:\Users\Joel Kayemba\OneDrive\Documents\Données - Qualité du Vin(3)\samples_reduced";//"C:\Users\amouz\OneDrive\Bureau\samples_reduced";
 
             /*   string cheminFichierApprentissage = @"C:\Users\Joel Kayemba\OneDrive\Documents\Données - Qualité du Vin(3)\train_reduced.csv";//"C:\Users\amouz\OneDrive\Bureau\Donnes_D_Apprentissage.csv";
                string cheminFichierTest = @"C:\Users\Joel Kayemba\OneDrive\Documents\Données - Qualité du Vin(3)\test_reduced.csv";//"C:\Users\amouz\OneDrive\Bureau\test_reduced.csv";
@@ -43,7 +45,8 @@ namespace TP_1
             double testSetPrecision = Entrainement.EvaluationFinale(arbre, donneesTest);
 
             // Affichage de la précision sur l'ensemble de test
-            Console.WriteLine("Précision sur l'ensemble de test : " + testSetPrecision);
+            Console.WriteLine($"Voici le moment de vérité : la précision sur notre ensemble de test atteint un impressionnant {testSetPrecision}%, révélant l'extraordinaire précision de notre modèle dans l'art délicat d'évaluer la qualité des vins. Célébrons ensemble cette réussite qui marque un pas de géant vers la maîtrise de l'univers vinicole !");
+            Console.WriteLine("----------------------------------------------------------------------------------------------------");
             // Création de oenologue
             Oenologue oenologue = new Oenologue("Byckel", "Koffi", 27);
 
@@ -56,9 +59,9 @@ namespace TP_1
             while (true)
             {
                 Console.WriteLine("=== Menu Général ===");
-                Console.WriteLine("1. Opérations de l'œnologue");
-                Console.WriteLine("2. Opérations du propriétaire");
-                Console.WriteLine("3. Opérations de l'administrateur");
+                Console.WriteLine("1. Opérations de l'œnologue: Plongez dans l'analyse sensorielle et dévoilez les secrets cachés dans chaque millésime.");
+                Console.WriteLine("2. Opérations du propriétaire: Gérez avec précision le patrimoine de votre domaine, de la vigne au verre.");
+                Console.WriteLine("3. Opérations de l'administrateur: Supervisez l'orchestre de notre application pour garantir une symphonie sans fausse note.");
                 Console.WriteLine("4. Quitter");
 
                 Console.Write("Choisissez une option : ");
@@ -67,6 +70,8 @@ namespace TP_1
                 switch (choixMenu)
                 {
                     case "1":
+                 
+
                         //Operations de l'oneologue
                         // Demander à l'utilisateur de saisir les informations sur le vin à prédire
                         while (true)
