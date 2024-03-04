@@ -210,8 +210,10 @@ namespace TP_1
                         {
                             Console.WriteLine("Opérations de l'administrateur :");
                             Console.WriteLine("1. Ajouter un propriétaire");
-                            Console.WriteLine("2. Ajouter un œnologue");
-                            Console.WriteLine("3. Retour au menu général");
+                            Console.WriteLine("2. Supprimer un propriétaire");
+                            Console.WriteLine("3. Ajouter un œnologue");
+                            Console.WriteLine("4. Supprimer un propriétaire");
+                            Console.WriteLine("5. Retour au menu général");
 
                             Console.Write("Choisissez une option : ");
                             string choixAdmin = Console.ReadLine();
@@ -220,11 +222,131 @@ namespace TP_1
                             {
                                 case "1":
                                     // Logique pour ajouter un propriétaire
+                                    Console.WriteLine("Veuillez saisir les informations du propriétaire :");
+                                    Console.Write("Nom : ");
+                                    string nomProprietaire = Console.ReadLine();
+                                    Console.Write("Prénom : ");
+                                    string prenomProprietaire = Console.ReadLine();
+                                    Console.Write("Age : ");
+                                    int ageProprietaire = int.Parse(Console.ReadLine());
+
+                                    // Création d'une chaîne contenant les informations du nouveau propriétaire
+                                    string nouvelleEntree = $"Nom: {nomProprietaire}, Prénom: {prenomProprietaire}, Âge: {ageProprietaire}";
+
+                                    // Ajouter la nouvelle entrée à la fin du fichier
+                                    File.AppendAllText(@"C:\Users\amouz\OneDrive\Bureau\TP#1\Donnees_sauvegarde\Donnees_Proprietaire.txt", nouvelleEntree + Environment.NewLine);
+
+                                    Console.WriteLine("Propriétaire ajouté avec succès !");
+
                                     break;
                                 case "2":
-                                    // Logique pour ajouter un œnologue
+                                    /// Supprimer un propriétaire
+                                    // Afficher la liste des propriétaires avec leurs indices
+                                    Console.WriteLine("Liste des propriétaires :");
+                                    string[] lines = File.ReadAllLines(@"C:\Users\amouz\OneDrive\Bureau\TP#1\Donnees_sauvegarde\Donnees_Proprietaire.txt");
+                                    if (lines.Length == 0)
+                                    {
+                                        Console.WriteLine("Il n'y a aucun propriétaire à supprimer.");
+                                    }
+                                    else
+                                    {
+                                        for (int i = 0; i < lines.Length; i++)
+                                        {
+                                            Console.WriteLine($"{i + 1}. {lines[i]}");
+                                        }
+
+                                        // Demander à l'utilisateur de choisir le propriétaire à supprimer
+                                        Console.Write("Veuillez entrer le numéro du propriétaire à supprimer : ");
+                                        int indiceProprietaire;
+                                        if (int.TryParse(Console.ReadLine(), out indiceProprietaire))
+                                        {
+                                            // Vérifier si l'indice est valide
+                                            if (indiceProprietaire >= 1 && indiceProprietaire <= lines.Length)
+                                            {
+                                                // Supprimer la ligne correspondant à l'indice dans le fichier
+                                                List<string> modifiedLines = lines.ToList();
+                                                modifiedLines.RemoveAt(indiceProprietaire - 1);
+                                                File.WriteAllLines(@"C:\Users\amouz\OneDrive\Bureau\TP#1\Donnees_sauvegarde\Donnees_Proprietaire.txt", modifiedLines);
+                                                Console.WriteLine("Propriétaire supprimé avec succès !");
+                                            }
+                                            else
+                                            {
+                                                Console.WriteLine("Indice de propriétaire non valide.");
+                                            }
+                                        }
+                                        else
+                                        {
+                                            Console.WriteLine("Veuillez entrer un numéro valide.");
+                                        }
+                                    }
                                     break;
+
                                 case "3":
+                                    // Logique pour ajouter un œnologue
+                                    Console.WriteLine("Veuillez saisir les informations de l'œnologue :");
+                                    Console.Write("Nom : ");
+                                    string nomOenologue = Console.ReadLine();
+                                    Console.Write("Prénom : ");
+                                    string prenomOenologue = Console.ReadLine();
+                                    Console.Write("Age : ");
+                                    int ageOenologue = int.Parse(Console.ReadLine());
+
+                                    // Création d'une chaîne contenant les informations du nouvel œnologue
+                                    string nouvelleEntreeOenologue = $"Nom: {nomOenologue}, Prénom: {prenomOenologue}, Âge: {ageOenologue}";
+
+                                    // Ajouter la nouvelle entrée à la fin du fichier des œnologues
+                                    File.AppendAllText(@"C:\Users\amouz\OneDrive\Bureau\TP#1\Donnees_sauvegarde\Donnees_Oenologue.txt", nouvelleEntreeOenologue + Environment.NewLine);
+
+                                    Console.WriteLine("Œnologue ajouté avec succès !");
+
+                                    break;
+
+
+                                case "4":
+                                    /// Supprimer un œnologue
+                                    // Afficher la liste des œnologues avec leurs indices
+                                    Console.WriteLine("Liste des œnologues :");
+                                    string[] lignesOenologues = File.ReadAllLines(@"C:\Users\amouz\OneDrive\Bureau\TP#1\Donnees_sauvegarde\Donnees_Oenologue.txt");
+                                    if (lignesOenologues.Length == 0)
+                                    {
+                                        Console.WriteLine("Il n'y a aucun œnologue à supprimer.");
+                                    }
+                                    else
+                                    {
+                                        for (int i = 0; i < lignesOenologues.Length; i++)
+                                        {
+                                            Console.WriteLine($"{i + 1}. {lignesOenologues[i]}");
+                                        }
+
+                                        // Demander à l'utilisateur de choisir l'œnologue à supprimer
+                                        Console.Write("Veuillez entrer le numéro de l'œnologue à supprimer : ");
+                                        int indiceOenologue;
+                                        if (int.TryParse(Console.ReadLine(), out indiceOenologue))
+                                        {
+                                            // Vérifier si l'indice est valide
+                                            if (indiceOenologue >= 1 && indiceOenologue <= lignesOenologues.Length)
+                                            {
+                                                // Supprimer la ligne correspondant à l'indice dans le fichier
+                                                List<string> lignesModifiees = lignesOenologues.ToList();
+                                                lignesModifiees.RemoveAt(indiceOenologue - 1);
+                                                File.WriteAllLines(@"C:\Users\amouz\OneDrive\Bureau\TP#1\Donnees_sauvegarde\Donnees_Oenologue.txt", lignesModifiees);
+                                                Console.WriteLine("Œnologue supprimé avec succès !");
+                                            }
+                                            else
+                                            {
+                                                Console.WriteLine("Indice d'œnologue non valide.");
+                                            }
+                                        }
+                                        else
+                                        {
+                                            Console.WriteLine("Veuillez entrer un numéro valide.");
+                                        }
+                                    }
+                                    break;
+
+                               
+                                    
+                                case "5":
                                     // Retour au menu général
                                     retour= true;
                                     break;

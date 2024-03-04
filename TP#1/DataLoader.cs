@@ -192,6 +192,29 @@ namespace TP_1
                 Console.WriteLine("Erreur lors de la suppression du terrain dans le fichier .txt : " + ex.Message);
             }
         }
+
+     
+        //Suvegarder oenologue
+        public static void SauvegarderOenologue(Oenologue oenologue)
+        {
+            try
+            {
+                string cheminFichier = @"C:\Users\amouz\OneDrive\Bureau\TP#1\Donnees_sauvegarde\Donnees_oenologue.txt";
+                using (StreamWriter writer = new StreamWriter(cheminFichier, true))
+                {
+                    writer.WriteLine($"Nom: {oenologue.Nom}, Prénom: {oenologue.Prenom}, Âge: {oenologue.Age}");
+                }
+                Console.WriteLine("Oenologue sauvegardé avec succès dans le fichier .txt.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Erreur lors de la sauvegarde de l'oenologue dans le fichier .txt : " + ex.Message);
+            }
+        }
+  
+
     }
-    }
+
+}
+
 
