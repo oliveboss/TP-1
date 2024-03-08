@@ -16,6 +16,7 @@ namespace TP_1
             Longueur = longueur;
             Largeur = largeur;
         }
+        public Proprietaire Proprietaire { get; set; }
 
         public float Surface(float longueur, float largeur)
         {

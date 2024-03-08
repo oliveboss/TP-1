@@ -119,40 +119,84 @@ namespace TP_1
 
             return donneesEchantillons;
         }
-        public static void SauvegarderDonneesVin(Vin vin, string cheminFichier)
+        private static int id;
+        private static int i;
+        static DataLoader()
         {
-            int i = 1;
+           
+            ChargerDernierIndiceVin();
+
+        }
+        private static void ChargerDernierIndiceVin()
+        {
+            string cheminFichier = @"C:\Users\amouz\OneDrive\Bureau\TP#1\Donnees_sauvegarde\Donnees_vin.txt";
+         id = ChargerDernierIndice(cheminFichier);
+        }
+
+      
+        private static int ChargerDernierIndice(string cheminFichier)
+        {
+            try
+            {
+                if (File.Exists(cheminFichier))
+                {
+                    string[] lignes = File.ReadAllLines(cheminFichier);
+                    int dernierIndice = 0;
+                    foreach (string ligne in lignes)
+                    {
+                        if (ligne.StartsWith("Vin "))
+                        {
+                            string[] tokens = ligne.Split(' ');
+                            if (int.TryParse(tokens[1], out int indice))
+                            {
+                                dernierIndice = Math.Max(dernierIndice, indice);
+                            }
+                        }
+                    }
+                    return dernierIndice;
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Erreur lors du chargement du dernier indice : " + ex.Message);
+                return 0;
+            }
+        }
+
+        public static void SauvegarderDonneesVin(Vin vin, string cheminFichier, Oenologue oenologue)
+        {
+           
             try
             {
                 using (StreamWriter writer = new StreamWriter(cheminFichier, true))
                 {
                     // Écrire les informations du vin dans le fichier
-                    writer.WriteLine("Vin Num " + i + ": ");
-                    writer.WriteLine($"Alcool: {vin.Alcool}, Sulfate: {vin.Sulfate}, Acide citrique: {vin.Acide_citrique}, Acidité volatile: {vin.Acidite_volatile}, Qualité: {vin.Qualite}");
-                    i++;
+                    writer.WriteLine($"Vin {id+1} : \n Alcool: " + vin.Alcool + ", Sulfate: " + vin.Sulfate + ", Acide citrique: " + vin.Acide_citrique + ", Acidité volatile: " + vin.Acidite_volatile + ", Qualité: " + vin.Qualite + "   Œnologue: " + oenologue.Nom + " " + oenologue.Prenom);
                 }
+                Console.WriteLine("Informations du vin sauvegardées avec succès.");
+                id++;
             }
             catch (Exception ex)
             {
-
-
                 Console.WriteLine("Erreur lors de la sauvegarde des données du vin : " + ex.Message);
             }
-
-
-
-
         }
+      
+     
 
-        public static void SauvegarderTerrain(Terrain terrain)
+        public static void SauvegarderTerrain(Terrain terrain, Proprietaire proprietaire)
         {
-            int i = 1;
+            
             try
             {
-                string cheminFichier = @"C:\Users\amouz\OneDrive\Bureau\TP#1\Donnees_sauvegarde\Donnees_Terrain.txt"; 
+                string cheminFichier = @"C:\Users\amouz\OneDrive\Bureau\TP#1\Donnees_sauvegarde\Donnees_Terrain.txt";
                 using (StreamWriter writer = new StreamWriter(cheminFichier, true))
                 {
-                    writer.WriteLine($"Terrain {i}: Longueur = {terrain.Longueur} m, Largeur = {terrain.Largeur} m");
+                    writer.WriteLine($" Longueur = {terrain.Longueur} m, Largeur = {terrain.Largeur} m , Propriétaire associé: {proprietaire.Nom} {proprietaire.Prenom}");
                 }
                 Console.WriteLine("Terrain sauvegardé avec succès dans le fichier .txt.");
                 i++;
@@ -161,39 +205,9 @@ namespace TP_1
             {
                 Console.WriteLine("Erreur lors de la sauvegarde du terrain dans le fichier .txt : " + ex.Message);
             }
+            
         }
-
-        public static void SupprimerTerrain(List<Terrain> terrains, int indice)
-        {
-            try
-            {
-                if (indice >= 1 && indice <= terrains.Count)
-                {
-                    string cheminFichier = @"C:\Users\amouz\OneDrive\Bureau\TP#1\Donnees_sauvegarde\Donnees_Terrain.txt";
-                  
-                    // Réécrire tous les terrains dans le fichier
-                    using (StreamWriter writer = new StreamWriter(cheminFichier))
-                    {
-                        for (int i = 0; i < terrains.Count; i++)
-                        {
-                            writer.WriteLine($"Terrain {i + 1}: Longueur = {terrains[i].Longueur} m, Largeur = {terrains[i].Largeur} m");
-                        }
-                    }
-
-                    Console.WriteLine($"Le terrain {indice} a été supprimé avec succès du fichier .txt.");
-                }
-                else
-                {
-                    Console.WriteLine("Indice de terrain non valide.");
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Erreur lors de la suppression du terrain dans le fichier .txt : " + ex.Message);
-            }
-        }
-        
-     
+       
         //Suvegarder oenologue
         public static void SauvegarderOenologue(Oenologue oenologue)
         {
@@ -211,7 +225,97 @@ namespace TP_1
                 Console.WriteLine("Erreur lors de la sauvegarde de l'oenologue dans le fichier .txt : " + ex.Message);
             }
         }
-  
+
+        public static Oenologue ChoisirOenologue()
+        {
+            while (true)
+            {
+                Console.WriteLine("Liste des œnologues disponibles :");
+                string[] lignesOenologues = File.ReadAllLines(@"C:\Users\amouz\OneDrive\Bureau\TP#1\Donnees_sauvegarde\Donnees_Oenologue.txt");
+
+                if (lignesOenologues.Length == 0)
+                {
+                    Console.WriteLine("Il n'y a aucun œnologue disponible pour évaluer la qualité.");
+                    return null;
+                }
+
+                for (int i = 0; i < lignesOenologues.Length; i++)
+                {
+                    Console.WriteLine($"{i + 1}. {lignesOenologues[i]}");
+                }
+
+                // Demander à l'utilisateur de choisir l'œnologue
+                Console.Write("Veuillez entrer le numéro de l'œnologue qui évaluera la qualité : ");
+                if (int.TryParse(Console.ReadLine(), out int indiceOenologue))
+                {
+                    // Vérifier si l'indice est valide
+                    if (indiceOenologue >= 1 && indiceOenologue <= lignesOenologues.Length)
+                    {
+                        // Récupérer les informations de l'œnologue choisi
+                        string[] oenologueInfo = lignesOenologues[indiceOenologue - 1].Split(',');
+                        string nomOenologue = oenologueInfo[0].Split(':')[1].Trim();
+                        string prenomOenologue = oenologueInfo[1].Split(':')[1].Trim();
+                        int ageOenologue = int.Parse(oenologueInfo[2].Split(':')[1].Trim());
+
+                        // Créer et retourner l'objet Œnologue choisi
+                        return new Oenologue(nomOenologue, prenomOenologue, ageOenologue);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Indice d'œnologue non valide. Veuillez entrer un numéro entre 1 et " + lignesOenologues.Length + ".");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Veuillez entrer un numéro valide.");
+                }
+            }
+        }
+        public static Proprietaire ChoisirProprietaire()
+        {
+            Console.WriteLine("Liste des propriétaires disponibles :");
+            string[] lignesProprietaires = File.ReadAllLines(@"C:\Users\amouz\OneDrive\Bureau\TP#1\Donnees_sauvegarde\Donnees_Proprietaire.txt");
+
+            if (lignesProprietaires.Length == 0)
+            {
+                Console.WriteLine("Il n'y a aucun propriétaire disponible.");
+                return null;
+            }
+
+            for (int i = 0; i < lignesProprietaires.Length; i++)
+            {
+                Console.WriteLine($"{i + 1}. {lignesProprietaires[i]}");
+            }
+
+            // Demander à l'utilisateur de choisir le propriétaire
+            Console.Write("Veuillez entrer le numéro du propriétaire : ");
+            if (int.TryParse(Console.ReadLine(), out int indiceProprietaire))
+            {
+                // Vérifier si l'indice est valide
+                if (indiceProprietaire >= 1 && indiceProprietaire <= lignesProprietaires.Length)
+                {
+                    // Récupérer les informations du propriétaire choisi
+                    string[] proprietaireInfo = lignesProprietaires[indiceProprietaire - 1].Split(',');
+                    string nomProprietaire = proprietaireInfo[0].Split(':')[1].Trim();
+                    string prenomProprietaire = proprietaireInfo[1].Split(':')[1].Trim();
+                    int ageProprietaire = int.Parse(proprietaireInfo[2].Split(':')[1].Trim());
+
+                    // Créer et retourner l'objet Proprietaire choisi
+                    return new Proprietaire(nomProprietaire, prenomProprietaire, ageProprietaire);
+                }
+                else
+                {
+                    Console.WriteLine("Indice de propriétaire non valide.");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Veuillez entrer un numéro valide.");
+            }
+
+            return null;
+        }
+
 
     }
 

@@ -48,8 +48,6 @@ namespace TP_1
             Console.WriteLine($"Voici le moment de vérité : la précision sur notre ensemble de test atteint un impressionnant {testSetPrecision}%, révélant l'extraordinaire précision de notre modèle dans l'art délicat d'évaluer la qualité des vins. Célébrons ensemble cette réussite qui marque un pas de géant vers la maîtrise de l'univers vinicole !");
             Console.WriteLine("----------------------------------------------------------------------------------------------------");
             // Création de oenologue
-            Oenologue oenologue = new Oenologue("Byckel", "Koffi", 27);
-
             Proprietaire proprietaire = new Proprietaire("OLIVE", "KAPO", 20);
 
 
@@ -70,10 +68,12 @@ namespace TP_1
                 switch (choixMenu)
                 {
                     case "1":
-                 
+
 
                         //Operations de l'oneologue
                         // Demander à l'utilisateur de saisir les informations sur le vin à prédire
+
+                        Oenologue oenologueChoisi = DataLoader.ChoisirOenologue();
                         while (true)
                         {
                             Vin vinAAnalyser = new Vin();
@@ -96,13 +96,19 @@ namespace TP_1
 
                             // Afficher la qualité prédite en utilisant la méthode Afficher de la classe Qualité
                             Qualite.Afficher(qualitePredite);
-                            oenologue.AssocierVin(vinAAnalyser);
-                            oenologue.EvaluerQualitéVin();
+                            if (oenologueChoisi != null)
+                            {
+                                // Utiliser l'œnologue choisi pour évaluer la qualité du vin
+                                
+                                 oenologueChoisi.AssocierVin(vinAAnalyser);
+                                 oenologueChoisi.EvaluerQualitéVin();
+                               
+                            }
                             Console.WriteLine("Voulez-vous sauvegarder les informations de ce vin ? (O/N)");
                             string choix = Console.ReadLine().ToUpper();
                             if (choix == "O")
                             {
-                                DataLoader.SauvegarderDonneesVin(vinAAnalyser, @"C:\Users\amouz\OneDrive\Bureau\TP#1\Donnees_sauvegarde\Donnees_vin.txt");
+                                DataLoader.SauvegarderDonneesVin(vinAAnalyser, @"C:\Users\amouz\OneDrive\Bureau\TP#1\Donnees_sauvegarde\Donnees_vin.txt",oenologueChoisi);
                                 Console.WriteLine("Informations sauvegardées avec succès.");
                             }
                             Console.WriteLine("Voulez-vous évaluer un autre vin ? (O/N)");
@@ -115,7 +121,8 @@ namespace TP_1
                         }
                         break;
                     case "2":
-
+                        Proprietaire proprietaireChoisi = DataLoader.ChoisirProprietaire();
+                        
                         bool retourAuMenuGeneral = false;
 
                         while (!retourAuMenuGeneral)
@@ -140,18 +147,21 @@ namespace TP_1
                                     Terrain terrain = new Terrain(longueurTerrain, largeurTerrain);
                                     vignoble.AjouterTerrain(terrain);
 
-                                    DataLoader.SauvegarderTerrain(terrain);
+                                    DataLoader.SauvegarderTerrain(terrain,proprietaireChoisi);
                                     break;
-
                                 case "2":
-                                    // Vérifier si la liste des terrains n'est pas vide
-                                    if (vignoble.Terrains.Count > 0)
+                                    // Afficher la liste des terrains avec leurs indices
+                                    Console.WriteLine("Liste des terrains :");
+                                    string[] lignesTerrains = File.ReadAllLines(@"C:\Users\amouz\OneDrive\Bureau\TP#1\Donnees_sauvegarde\Donnees_Terrain.txt");
+                                    if (lignesTerrains.Length == 0)
                                     {
-                                        // Afficher la liste des terrains avec leurs indices
-                                        Console.WriteLine("Liste des terrains :");
-                                        for (int i = 0; i < vignoble.Terrains.Count; i++)
+                                        Console.WriteLine("Il n'y a aucun terrain à supprimer.");
+                                    }
+                                    else
+                                    {
+                                        for (int i = 0; i < lignesTerrains.Length; i++)
                                         {
-                                            Console.WriteLine($"{i + 1}. Terrain {i + 1}: Longueur = {vignoble.Terrains[i].Longueur} m, Largeur = {vignoble.Terrains[i].Largeur} m");
+                                            Console.WriteLine($"{i + 1}. {lignesTerrains[i]}");
                                         }
 
                                         // Demander à l'utilisateur de choisir le terrain à supprimer
@@ -160,15 +170,13 @@ namespace TP_1
                                         if (int.TryParse(Console.ReadLine(), out indiceTerrain))
                                         {
                                             // Vérifier si l'indice est valide
-                                            if (indiceTerrain >= 1 && indiceTerrain <= vignoble.Terrains.Count)
+                                            if (indiceTerrain >= 1 && indiceTerrain <= lignesTerrains.Length)
                                             {
-                                                // Supprimer le terrain de la liste
-                                                Terrain terrainASupprimer = vignoble.Terrains[indiceTerrain - 1];
-                                                vignoble.Terrains.RemoveAt(indiceTerrain - 1);
-                                                DataLoader.SupprimerTerrain(vignoble.Terrains, indiceTerrain);
-                                                Console.WriteLine($"Le terrain {indiceTerrain} a été supprimé avec succès.");
-
-
+                                                // Supprimer la ligne correspondant à l'indice dans le fichier
+                                                List<string> lignesModifiees = lignesTerrains.ToList();
+                                                lignesModifiees.RemoveAt(indiceTerrain - 1);
+                                                File.WriteAllLines(@"C:\Users\amouz\OneDrive\Bureau\TP#1\Donnees_sauvegarde\Donnees_Terrain.txt", lignesModifiees);
+                                                Console.WriteLine("Terrain supprimé avec succès !");
                                             }
                                             else
                                             {
@@ -180,13 +188,9 @@ namespace TP_1
                                             Console.WriteLine("Veuillez entrer un numéro valide.");
                                         }
                                     }
-                                    else
-                                    {
-                                        Console.WriteLine("Il n'y a aucun terrain à supprimer.");
-                                    }
-
-
                                     break;
+                                    
+
 
                                 case "3":
                                     retourAuMenuGeneral = true;
@@ -239,45 +243,73 @@ namespace TP_1
                                     Console.WriteLine("Propriétaire ajouté avec succès !");
 
                                     break;
+                                
                                 case "2":
-                                    /// Supprimer un propriétaire
-                                    // Afficher la liste des propriétaires avec leurs indices
-                                    Console.WriteLine("Liste des propriétaires :");
-                                    string[] lines = File.ReadAllLines(@"C:\Users\amouz\OneDrive\Bureau\TP#1\Donnees_sauvegarde\Donnees_Proprietaire.txt");
-                                    if (lines.Length == 0)
-                                    {
-                                        Console.WriteLine("Il n'y a aucun propriétaire à supprimer.");
-                                    }
-                                    else
-                                    {
-                                        for (int i = 0; i < lines.Length; i++)
-                                        {
-                                            Console.WriteLine($"{i + 1}. {lines[i]}");
-                                        }
+                                    string cheminFichier = @"C:\Users\amouz\OneDrive\Bureau\TP#1\Donnees_sauvegarde\Donnees_Terrain.txt";
 
-                                        // Demander à l'utilisateur de choisir le propriétaire à supprimer
-                                        Console.Write("Veuillez entrer le numéro du propriétaire à supprimer : ");
-                                        int indiceProprietaire;
-                                        if (int.TryParse(Console.ReadLine(), out indiceProprietaire))
+                                    // Vérifier si le fichier de données des terrains existe
+                                    if (File.Exists(cheminFichier))
+                                    {
+                                        // Lire toutes les lignes du fichier
+                                        string[] lines = File.ReadAllLines(cheminFichier);
+
+                                        // Vérifier si le fichier contient des données
+                                        if (lines.Length > 0)
                                         {
-                                            // Vérifier si l'indice est valide
-                                            if (indiceProprietaire >= 1 && indiceProprietaire <= lines.Length)
+                                            // Afficher la liste des terrains pour le propriétaire choisi
+                                            Console.WriteLine("Liste des terrains :");
+                                            bool terrainTrouve = false;
+                                            for (int i = 0; i < lines.Length; i += 2)
                                             {
-                                                // Supprimer la ligne correspondant à l'indice dans le fichier
-                                                List<string> modifiedLines = lines.ToList();
-                                                modifiedLines.RemoveAt(indiceProprietaire - 1);
-                                                File.WriteAllLines(@"C:\Users\amouz\OneDrive\Bureau\TP#1\Donnees_sauvegarde\Donnees_Proprietaire.txt", modifiedLines);
-                                                Console.WriteLine("Propriétaire supprimé avec succès !");
+                                                string[] terrainInfo = lines[i].Split(new string[] { ", Propriétaire associé: " }, StringSplitOptions.None);
+                                                string proprietaireInfo = terrainInfo[1];
+                                                if (proprietaireInfo == $"{proprietaire.Nom} {proprietaire.Prenom}")
+                                                {
+                                                    Console.WriteLine(lines[i]);
+                                                    terrainTrouve = true;
+                                                }
+                                            }
+
+                                            if (!terrainTrouve)
+                                            {
+                                                Console.WriteLine("Aucun terrain trouvé pour ce propriétaire.");
                                             }
                                             else
                                             {
-                                                Console.WriteLine("Indice de propriétaire non valide.");
+                                                // Demander à l'utilisateur de choisir le terrain à supprimer
+                                                Console.Write("Veuillez entrer le numéro du terrain à supprimer : ");
+                                                if (int.TryParse(Console.ReadLine(), out int choixTerrain))
+                                                {
+                                                    // Vérifier si l'indice est valide
+                                                    if (choixTerrain >= 1 && choixTerrain <= lines.Length / 2)
+                                                    {
+                                                        // Supprimer les lignes correspondant au terrain choisi dans le fichier
+                                                        List<string> modifiedLines = lines.ToList();
+                                                        modifiedLines.RemoveAt((choixTerrain - 1) * 2); // Supprimer la ligne du terrain
+                                                        modifiedLines.RemoveAt((choixTerrain - 1) * 2); // Supprimer la ligne du propriétaire
+                                                        File.WriteAllLines(cheminFichier, modifiedLines);
+
+                                                        Console.WriteLine($"Le terrain {choixTerrain} a été supprimé avec succès.");
+                                                    }
+                                                    else
+                                                    {
+                                                        Console.WriteLine("Indice de terrain non valide.");
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    Console.WriteLine("Veuillez entrer un numéro valide.");
+                                                }
                                             }
                                         }
                                         else
                                         {
-                                            Console.WriteLine("Veuillez entrer un numéro valide.");
+                                            Console.WriteLine("Il n'y a aucun terrain à supprimer.");
                                         }
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("Le fichier de données des terrains n'existe pas.");
                                     }
                                     break;
 
