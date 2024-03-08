@@ -14,9 +14,9 @@ namespace TP_1
 
 
         //methode pour recuperer les fichier avec la bibliotheque  csvhelper
-        public static List<Vin> ChargerDonneesApprentissage(string cheminFichier)
+        public static List<ArbreDeDecision.Vin> ChargerDonneesApprentissage(string cheminFichier)
         {
-            List<Vin> donneesApprentissage = new List<Vin>();
+            List<ArbreDeDecision.Vin> donneesApprentissage = new List<ArbreDeDecision.Vin>();
 
             try
             {
@@ -34,7 +34,7 @@ namespace TP_1
                         float aciditeVolatile = csv.GetField<float>(3);
                         int qualite = csv.GetField<int>(4);
 
-                        Vin vin = new Vin
+                        ArbreDeDecision.Vin vin = new ArbreDeDecision.Vin
                         {
                             Alcool = alcool,
                             Sulfate = sulfate,
@@ -53,9 +53,9 @@ namespace TP_1
 
             return donneesApprentissage;
         }
-        public static List<Vin> ChargerDonneesEchantillons(string cheminRepertoire)
+        public static List<ArbreDeDecision.Vin> ChargerDonneesEchantillons(string cheminRepertoire)
         {
-            List<Vin> donneesEchantillons = new List<Vin>();
+            List<ArbreDeDecision.Vin> donneesEchantillons = new List<ArbreDeDecision.Vin>();
 
             try
             {
@@ -94,7 +94,7 @@ namespace TP_1
                                 float.TryParse(csv.GetField("volatile acidity"), NumberStyles.Float, CultureInfo.InvariantCulture, out aciditeVolatile) &&
                                 int.TryParse(csv.GetField("quality"), out qualite))
                             {
-                                Vin vin = new Vin
+                                ArbreDeDecision.Vin vin = new ArbreDeDecision.Vin
                                 {
                                     Alcool = alcool,
                                     Sulfate = sulfate,
@@ -167,7 +167,7 @@ namespace TP_1
             }
         }
 
-        public static void SauvegarderDonneesVin(Vin vin, string cheminFichier, Oenologue oenologue)
+        public static void SauvegarderDonneesVin(ArbreDeDecision.Vin vin, string cheminFichier, Oenologue oenologue)
         {
            
             try

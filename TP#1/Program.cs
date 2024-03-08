@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ArbreDeDecision;
 
 namespace TP_1
 {
@@ -23,12 +24,12 @@ namespace TP_1
             */
 
             // Charger les données d'apprentissage, de test et d'échantillon
-            List<Vin> donneesApprentissage = DataLoader.ChargerDonneesApprentissage(cheminFichierApprentissage);
-            List<Vin> donneesTest = DataLoader.ChargerDonneesApprentissage(cheminFichierTest);
-            List<Vin> donneesEchantillon = DataLoader.ChargerDonneesEchantillons(cheminFichierEchantillon);
+            List<ArbreDeDecision.Vin> donneesApprentissage = DataLoader.ChargerDonneesApprentissage(cheminFichierApprentissage);
+            List<ArbreDeDecision.Vin> donneesTest = DataLoader.ChargerDonneesApprentissage(cheminFichierTest);
+            List<ArbreDeDecision.Vin> donneesEchantillon = DataLoader.ChargerDonneesEchantillons(cheminFichierEchantillon);
 
             // Fusionner les données d'apprentissage et d'échantillon
-            List<Vin> donneesEntrainement = new List<Vin>(donneesApprentissage);
+            List<ArbreDeDecision.Vin> donneesEntrainement = new List<Vin>(donneesApprentissage);
             donneesEntrainement.AddRange(donneesEchantillon);
 
             // Définir les attributs
@@ -39,7 +40,7 @@ namespace TP_1
             Entrainement.RechercheHyperparametres(donneesEntrainement, attributs, out bestMaxDepth, out bestMinSamplesSplit);
 
             // Entraîner le modèle avec les meilleurs hyperparamètres
-            Arbre_de_decision arbre = Entrainement.EntrainementModele(donneesEntrainement, attributs, bestMaxDepth, bestMinSamplesSplit);
+           ArbreDeDecision.Arbre_de_decision arbre = Entrainement.EntrainementModele(donneesEntrainement, attributs, bestMaxDepth, bestMinSamplesSplit);
 
             // Évaluation finale sur l'ensemble de test
             double testSetPrecision = Entrainement.EvaluationFinale(arbre, donneesTest);
@@ -76,7 +77,7 @@ namespace TP_1
                         Oenologue oenologueChoisi = DataLoader.ChoisirOenologue();
                         while (true)
                         {
-                            Vin vinAAnalyser = new Vin();
+                            ArbreDeDecision.Vin vinAAnalyser = new ArbreDeDecision.Vin();
                             Console.WriteLine("Veuillez saisir les informations sur le vin à analyser :");
                             Console.Write("Alcool : ");
                             vinAAnalyser.Alcool = float.Parse(Console.ReadLine());

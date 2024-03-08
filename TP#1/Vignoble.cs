@@ -13,7 +13,7 @@ namespace TP_1
         public Proprietaire Propriétaire { get; set; }
         public List<Terrain> Terrains { get; set; } = new List<Terrain>(); // Utilisation d'une liste de terrains
 
-        public List<Vin> Vins { get; set; } = new List<Vin>();
+        public List<ArbreDeDecision.Vin> Vins { get; set; } = new List<ArbreDeDecision.Vin>();
 
         public Vignoble(Proprietaire propriétaire)
         {

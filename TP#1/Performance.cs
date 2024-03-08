@@ -8,12 +8,12 @@ namespace TP_1
 {
     internal class Performance
     {
-        public static double ValidationCroisee(List<Vin> donneesApprentissage, int folds, int maxDepth, int minSamplesSplit)
+        public static double ValidationCroisee(List<ArbreDeDecision.Vin> donneesApprentissage, int folds, int maxDepth, int minSamplesSplit)
         {
             Random rand = new Random();
-            List<Vin> donneesMelangees = donneesApprentissage.OrderBy(x => rand.Next()).ToList();
+            List<ArbreDeDecision.Vin> donneesMelangees = donneesApprentissage.OrderBy(x => rand.Next()).ToList();
 
-            List<List<Vin>> sousEnsembles = new List<List<Vin>>();
+            List<List<ArbreDeDecision.Vin>> sousEnsembles = new List<List<ArbreDeDecision.Vin>>();
             int tailleSousEnsemble = donneesMelangees.Count / folds;
             for (int i = 0; i < folds; i++)
             {
@@ -26,10 +26,10 @@ namespace TP_1
             foreach (var sousEnsemble in sousEnsembles)
             {
 
-                List<Vin> donneesValidation = sousEnsemble;
-                List<Vin> donneesEntrainement = donneesMelangees.Except(donneesValidation).ToList();
+                List<ArbreDeDecision.Vin> donneesValidation = sousEnsemble;
+                List<ArbreDeDecision.Vin> donneesEntrainement = donneesMelangees.Except(donneesValidation).ToList();
 
-                Arbre_de_decision arbre = new Arbre_de_decision(new List<string> { "Alcool", "Sulfate", "Acide_citrique", "Acidite_volatile", "Qualite" });
+                ArbreDeDecision.Arbre_de_decision arbre = new ArbreDeDecision.Arbre_de_decision(new List<string> { "Alcool", "Sulfate", "Acide_citrique", "Acidite_volatile", "Qualite" });
                 arbre.ConstruireArbre(donneesEntrainement, new List<string> { "Alcool", "Sulfate", "Acide_citrique", "Acidite_volatile", "Qualite" }, maxDepth, minSamplesSplit);
 
                 double precision = EvaluerModele(arbre, donneesValidation);
@@ -43,11 +43,11 @@ namespace TP_1
             return precisionMoyenne;
         }
 
-        public static double EvaluerModele(Arbre_de_decision arbre, List<Vin> donnees)
+        public static double EvaluerModele(ArbreDeDecision.Arbre_de_decision arbre, List<ArbreDeDecision.Vin> donnees)
         {
             int predictionsCorrectes = 0;
 
-            foreach (Vin instance in donnees)
+            foreach (ArbreDeDecision.Vin instance in donnees)
             {
                 int prediction = arbre.Predire(instance);
                 if (prediction == instance.Qualite)

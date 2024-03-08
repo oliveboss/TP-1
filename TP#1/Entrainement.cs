@@ -9,7 +9,7 @@ namespace TP_1
   public class Entrainement
     {
 
-        public static void RechercheHyperparametres(List<Vin> donneesApprentissage, List<string> attributs, out int bestMaxDepth, out int bestMinSamplesSplit)
+        public static void RechercheHyperparametres(List<ArbreDeDecision.Vin> donneesApprentissage, List<string> attributs, out int bestMaxDepth, out int bestMinSamplesSplit)
         {
             // Définir une grille de recherche pour les hyperparamètres
             List<int> maxDepths = new List<int> { 5, 10, 15 };
@@ -34,14 +34,14 @@ namespace TP_1
             }
         }
 
-        public static Arbre_de_decision EntrainementModele(List<Vin> donneesApprentissage, List<string> attributs, int maxDepth, int minSamplesSplit)
+        public static ArbreDeDecision.Arbre_de_decision EntrainementModele(List<ArbreDeDecision.Vin> donneesApprentissage, List<string> attributs, int maxDepth, int minSamplesSplit)
         {
-            Arbre_de_decision arbre = new Arbre_de_decision(attributs);
+            ArbreDeDecision.Arbre_de_decision arbre = new ArbreDeDecision.Arbre_de_decision(attributs);
             arbre.ConstruireArbre(donneesApprentissage, attributs, maxDepth, minSamplesSplit);
             return arbre;
         }
 
-        public static double EvaluationFinale(Arbre_de_decision arbre, List<Vin> donneesTest)
+        public static double EvaluationFinale(ArbreDeDecision.Arbre_de_decision arbre, List<ArbreDeDecision.Vin> donneesTest)
         {
             return Performance.EvaluerModele(arbre, donneesTest);
         }

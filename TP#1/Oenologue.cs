@@ -8,7 +8,7 @@ namespace TP_1
 {
     internal class Oenologue : Client
     {
-        public Vin Vin { get; set; }
+        public ArbreDeDecision.Vin Vin { get; set; }
 
         public Oenologue(string nom, string prenom, int age) 
         {
@@ -22,7 +22,7 @@ namespace TP_1
             Console.WriteLine($"Nom: {Nom}\nPrenom: {Prenom}\nAge: {Age}");
         }
 
-        public void AssocierVin(Vin vin)
+        public void AssocierVin(ArbreDeDecision.Vin vin)
         {
             this.Vin = vin;
         }
